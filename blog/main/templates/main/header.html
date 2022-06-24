@@ -11,8 +11,14 @@
     <title>News</title>
 </head>
 <body>
-
-    {% include "main/includes/navbar.html" %}
+    <nav>
+      <div class="nav-wrapper black">
+        <a href="/" class="brand-logo">Tutorials</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          {% include "main/includes/navbar.html" %}
+        </ul>
+      </div>
+    </nav>
     {% include "main/includes/messages.html" %}
 
     <div class="container">
@@ -22,4 +28,7 @@
     </div>
 
 </body>
+
+<script>M.AutoInit();</script>
+
 </html>

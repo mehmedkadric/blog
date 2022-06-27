@@ -9,14 +9,18 @@ from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
-@login_required(login_url='/login/')
-def profile(request):
+def landing_page(request):
+    messages.info(request, "Please login or register.")
+    return render(request, 'main/landing.html')
 
+
+@login_required(login_url='/landing/')
+def profile(request):
     return render(request=request,
                   template_name="main/profile.html")
 
 
-@login_required(login_url='/login/')
+@login_required(login_url='/landing/')
 def about_us(request):
     return render(request,
                   'main/about.html')
@@ -54,7 +58,7 @@ def single_slug(request, single_slug):
     return HttpResponse(f"{single_slug} does not correspond to anything.")
 
 
-@login_required(login_url='/login/')
+@login_required(login_url='/landing/')
 def homepage(request):
     return render(request=request,
                   template_name="main/categories.html",
@@ -96,12 +100,15 @@ def login_request(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                messages.info(request, f"You are now logged in as {username}")
+                messages.info(request, f"Welcome {username}!")
                 return redirect("main:homepage")
             else:
                 messages.error(request, "Invalid username or password")
         else:
             messages.error(request, "Invalid username or password")
+    if request.user.is_authenticated:
+        messages.info(request, "Already logged in")
+        return redirect("main:homepage")
     form = AuthenticationForm()
     return render(request,
                   "main/login.html",

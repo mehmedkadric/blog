@@ -5,9 +5,23 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from .forms import NewUserForm
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
+@login_required(login_url='/login/')
+def profile(request):
+
+    return render(request=request,
+                  template_name="main/profile.html")
+
+
+@login_required(login_url='/login/')
+def about_us(request):
+    return render(request,
+                  'main/about.html')
+
+
 def single_slug(request, single_slug):
     categories = [c.category_slug for c in TutorialCategory.objects.all()]
     if single_slug in categories:
@@ -18,9 +32,11 @@ def single_slug(request, single_slug):
                 "tutorial_published")
             series_urls[m] = part_one.tutorial_slug
 
+        cat = TutorialCategory.objects.filter(category_slug=single_slug).first()
         return render(request,
                       "main/category.html",
-                      {"part_ones": series_urls})
+                      {"part_ones": series_urls,
+                       "category": cat})
 
     tutorials = [t.tutorial_slug for t in Tutorial.objects.all()]
 
@@ -38,6 +54,7 @@ def single_slug(request, single_slug):
     return HttpResponse(f"{single_slug} does not correspond to anything.")
 
 
+@login_required(login_url='/login/')
 def homepage(request):
     return render(request=request,
                   template_name="main/categories.html",

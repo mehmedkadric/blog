@@ -1,10 +1,11 @@
-{% extends 'main/header.html' %}
+{% extends 'main/base.html' %}
 
 {% block content %}
 
     <div class="row">
+        <h1>{{category}}</h1>
+        <h2>Series</h2>
         {% for tut, partone in part_ones.items %}
-
             <div class="col s12 m6 l4">
                 <a href="{{partone}}", style="color:#000">
                     <div class="card hoverable">

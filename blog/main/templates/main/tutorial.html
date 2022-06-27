@@ -1,4 +1,4 @@
-{% extends 'main/header.html' %}
+{% extends "main/base.html" %}
 
 {% block content %}
 
@@ -14,15 +14,14 @@
             <ul class="collapsible popout">
                 {% for tutorial in sidebar %}
                     {% if forloop.counter0 == this_tut_idx %}
-                        <li class="active">
-                            <div class="collapsible-header">{{tutorial.tutorial_title}}<br>(currently viewing)</div>
+                        <li class="active center">
+                            <div class="collapsible-header center"><i class="material-icons green-text">arrow_forward</i>{{tutorial.tutorial_title}}</div>
                         </li>
                     {% else %}
                         <li>
-                            <div class="collapsible-header">{{tutorial.tutorial_title}}</div>
-                            <div class="collapsible-body">
-                                <p><a href="/{{tutorial.tutorial_slug}}"><button class="btn waves-effect waves-light right-align">Go</button></a></p>
-
+                            <div class="collapsible-header"><i class="material-icons">arrow_forward</i>{{tutorial.tutorial_title}}</div>
+                            <div class="collapsible-body center">
+                                <p><a href="/{{tutorial.tutorial_slug}}"><button class="btn waves-effect waves-light">Go</button></a></p>
                             </div>
                         </li>
                     {% endif %}
